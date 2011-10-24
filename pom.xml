@@ -14,7 +14,7 @@
         <artifactId>tomcat-maven-plugin</artifactId>
         <configuration>
           <server>openleg-tomcat</server>
-          <path>/legislation</path>
+          <path>/openlegui</path>
         </configuration>
       </plugin>
     </plugins>
