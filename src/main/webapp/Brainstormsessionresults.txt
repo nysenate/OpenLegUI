@@ -1,0 +1,3 @@
+Right side box for zip code to pull information about senator
+Leftside calander that shows when senate is in sessions the day of the week and anything else happening that day related to the senate
+Recently posted comments
