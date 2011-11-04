@@ -10,6 +10,7 @@ var popular=['Puppy bill', 'Meeting about puppy', 'Transcript of barking puppy',
 var newstuff=['This happened just now','This happened after that','Wow this happened today','Some other things happened recently too','Still recent enough to show up'];
 
 function init(){
+	
 	$("#searchzone").css("left", ( $(window).width() - $("#searchzone").width()) / 2+$(window).scrollLeft() + "px");
 	$(window).bind('resize', function(){$("#searchzone").css("left", ( $(window).width() - $("#searchzone").width()) / 2+$(window).scrollLeft() + "px");});
 	
@@ -73,7 +74,8 @@ function announcements(filter){
 	$('#announcements').html(contents);
 }
 
-function gosearch(){
+function gosearch(form){
+	
 	//alert($("#searchzone input[id*='search']").val());
 	//var url='http://open.nysenate.gov/legislation/api/json/search/'+$("#search").val()+'/1/20?callback=?';
 	//var url='http://open.nysenate.gov/legislation/2.0/search.json?term='+$("#search").val()'&callback=stuff';
@@ -84,15 +86,36 @@ function gosearch(){
 
 	$(window).unbind('resize');
 	$('#searchzone').animate({top: '-10px',width: '100%', height:'70px', left: '-20px'},200,function(){
+		var term = form.search.value;
+		var path="http://directory.nysenate.gov/legislation/2.0/search.jsonp?term="+term;
+		//$.get('http://directory.nysenate.gov/legislation/2.0/search.jsonp?term=dog',
+		$.get(path,
+	            function(data) {
+	            console.log();
+	            contents=[];
+	            
+	            $.each(data.response.results, function(i,item){
+	            	if(odd=='odd')
+	                    odd='';
+	                else
+	                    odd='odd';
+	                contents+='<div id="'+odd+'">'+ 'Name: ' + item.oid +' | Type: ' + item.otype +  '</div><br/>';	     
+	            });
+
+	            $('#content').html(contents);
+	            $('#content').css('display','block');
+	            $('#contentfilters').css('display','block');
+	            $('#breadcrumbs').css('display','block');
+	            //alert(data.response.metadata.totalresults);
+	            },
+	            'jsonp');
+		
+        
 			/*$.getJSON(url, function(data) { 
 				alert("hi");
 			});*/
-			$.ajax({"url":"http://open.nysenate.gov/legislation/2.0/search.json?term=puppy&callback=?", 
-					dataType:'json', 
-					success: function(data) {
-						 alert('hi'); 
-						 }
-					 });
+			
+			/*
 			var everything = popular.concat(newstuff);
 			odd='odd';
 			contents=[];
@@ -108,6 +131,7 @@ function gosearch(){
 			$('#content').css('display','block');
 			$('#contentfilters').css('display','block');
 			$('#breadcrumbs').css('display','block');
+			*/
 			
 	});
 	//////////////////////////////////////////////////////////////////////////////////////////////////
@@ -130,11 +154,6 @@ function gosearch(){
 		else
 			$("#searchzone img").css({display:'block',position:'absolute',left:parseInt($("#filters").css('left').replace('px','')-$("#searchzone img").width())+"px",top:'50px'});	
 	});
-	
-	
-	
-
-
 }
 
 function order(choice){
@@ -162,9 +181,9 @@ function order(choice){
         <input type="button" value="Actions" onclick="filter('Actions')" id="unclicked"/>
         <input type="button" value="Votes" onclick="filter('Votes')" id="unclicked"/>
     
-	<form>
+	<form name="search" action="" method="GET">
 		<input type="text" name="search" id="search" value="Start searching here!" style="color:black;"/> 
-        <input type="button" value="Go" onclick="gosearch()" id="go"/>
+        <input type="button" value="Go" onclick="gosearch(this.form)" id="go"/>
 	</form></div>
     <div id="breadcrumbs"><a href="">Home</a> Search</div>
     <div id="filters" class="second">
