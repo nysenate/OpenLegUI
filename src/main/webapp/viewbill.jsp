@@ -16,15 +16,34 @@ function init(){
 	$.get(path,
             function(data) {
 		         contents=[];
-		         //contents=data.response.results[0].data.billsenateBV;
-		         //contents=data.response.results.0.data.bill.senateBillNo;
+		         var temp="";
+
 		         contents+='<h2>' + data.response.results[0].data.bill.senateBillNo + ': ' + data.response.results[0].data.bill.title + '</h2>';
-		         //if (data.response.results[0].memo!=undefined){
-		         contents+=data.response.results[0].data.bill.fulltext;
+		         
+		         /*if (data.response.results[0].memo!=undefined){
+		        	  var temp=data.response.results[0].data.bill.memo;
+		        	  var memo=temp.replace(/\n/gi, "<br/>");
+		        	  var test="hi";
+		        	  contents+=test; 
+			     }
+			     */
+			     if (data.response.results[0].data.bill.memo!=undefined){
+				     temp=data.response.results[0].data.bill.memo;
+				     var memo=temp.replace(/\n/gi, "<br/>");
+				     contents+=memo;
+			     }
+		         if (data.response.results[0].data.bill.fulltext!=undefined){
+                     temp=data.response.results[0].data.bill.fulltext;
+                     var fulltext=temp.replace(/\n/gi, "<br/>");
+                     contents+=fulltext; 
+                 }
+                 temp="";
+		         //var temp=data.response.results[0].data.bill.fulltext;
+		         //var temp2=temp.replace(/\n/gi, "<br/>")
+		         //alert(temp);
+		         //contents+=temp2;
 		         //}
 		         $('body').html(contents);
-            //console.log()
-            //alert(data.response.metadata.totalresults);
             },
     'jsonp');
 }
