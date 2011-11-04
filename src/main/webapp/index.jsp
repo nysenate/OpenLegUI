@@ -93,7 +93,8 @@ function gosearch(form){
 		$.get(path,
 	            function(data) {
 	            console.log();
-	            contents=[];
+	            var contents=[];
+	            var odd;
 	            
 	            $.each(data.response.results, function(i,item){
 	            	if(odd=='odd')
