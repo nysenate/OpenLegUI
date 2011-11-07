@@ -9,13 +9,25 @@
 var filtered=[];
 var popular=['Puppy bill', 'Meeting about puppy', 'Transcript of barking puppy', 'A puppy taking action', 'People voting on puppies'];
 var newstuff=['This happened just now','This happened after that','Wow this happened today','Some other things happened recently too','Still recent enough to show up'];
-
+var searchTerm = getUrlVars()["search"];
 function init(){
 	
 	$("#searchzone").css("left", ( $(window).width() - $("#searchzone").width()) / 2+$(window).scrollLeft() + "px");
 	$(window).bind('resize', function(){$("#searchzone").css("left", ( $(window).width() - $("#searchzone").width()) / 2+$(window).scrollLeft() + "px");});
 	
 	announcements('popular');
+	
+    if (searchTerm!=undefined){
+    	   gosearch();
+    }
+}
+
+function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value;
+    });
+    return vars;
 }
 
 function filter(choice){
@@ -75,8 +87,8 @@ function announcements(filter){
 	$('#announcements').html(contents);
 }
 
-function gosearch(form){
-	
+//function gosearch(form){
+function gosearch(){	
 	//alert($("#searchzone input[id*='search']").val());
 	//var url='http://open.nysenate.gov/legislation/api/json/search/'+$("#search").val()+'/1/20?callback=?';
 	//var url='http://open.nysenate.gov/legislation/2.0/search.json?term='+$("#search").val()'&callback=stuff';
@@ -87,9 +99,10 @@ function gosearch(form){
 
 	$(window).unbind('resize');
 	$('#searchzone').animate({top: '-10px',width: '100%', height:'70px', left: '-20px'},200,function(){
-		var term = form.search.value;
-		var path="http://directory.nysenate.gov/legislation/2.0/search.jsonp?term="+term;
-		//$.get('http://directory.nysenate.gov/legislation/2.0/search.jsonp?term=dog',
+		//var term = form.search.value;
+		
+		//var path="http://directory.nysenate.gov/legislation/2.0/search.jsonp?term="+term;
+		var path="http://directory.nysenate.gov/legislation/2.0/search.jsonp?term="+searchTerm;
 		$.get(path,
 	            function(data) {
 	            console.log();
@@ -182,11 +195,19 @@ function order(choice){
     	<input type="button" value="Transcripts" onclick="filter('Transcripts')" id="unclicked"/>
         <input type="button" value="Actions" onclick="filter('Actions')" id="unclicked"/>
         <input type="button" value="Votes" onclick="filter('Votes')" id="unclicked"/>
-    
+    <!--  
 	<form name="search" action="" method="GET">
 		<input type="text" name="search" id="search" value="Start searching here!" style="color:black;"/> 
         <input type="button" value="Go" onclick="gosearch(this.form)" id="go"/>
-	</form></div>
+	</form>
+	-->
+	
+	<form name="input" action="" method="get">
+    <input type="text" name="search" id="search" value="Start searching here!" style="color:black;"/> 
+    <input type="submit" value="Submit" />
+    </form>
+    
+	</div>
     <div id="breadcrumbs"><a href="">Home</a> Search</div>
     <div id="filters" class="second">
     	<input type="button" value="Popular" onclick="filter('Popular')" id="clicked"/>
