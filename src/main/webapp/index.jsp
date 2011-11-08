@@ -4,6 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+<script type="text/javascript" src="openlegui.js"></script>
 
 <script type="text/javascript">
 var filtered=[];
@@ -22,6 +23,7 @@ function init(){
     }
 }
 
+/*
 function getUrlVars() {
     var vars = {};
     var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
@@ -29,6 +31,7 @@ function getUrlVars() {
     });
     return vars;
 }
+*/
 
 function filter(choice){
 	//filtered+=[choice];
@@ -99,9 +102,24 @@ function gosearch(){
 
 	$(window).unbind('resize');
 	$('#searchzone').animate({top: '-10px',width: '100%', height:'70px', left: '-20px'},200,function(){
+	    /*
+	    $.each(data.response.results, function(i,item){
+            if(odd=='odd')
+                odd='';
+            else
+                odd='odd';
+            contents+='<div id="'+odd+'">'+ 'Name: <a href=view' + item.otype + '.jsp?oid=' + item.oid + '>' + item.oid +'</a> | Type: ' + item.otype +  '</div><br/>';      
+        });
+
+        $('#content').html(contents);
+        $('#content').css('display','block');
+        $('#contentfilters').css('display','block');
+        $('#breadcrumbs').css('display','block');
+        */
+	    
 		//var term = form.search.value;
 		
-		//var path="http://directory.nysenate.gov/legislation/2.0/search.jsonp?term="+term;
+		
 		var path="http://directory.nysenate.gov/legislation/2.0/search.jsonp?term="+searchTerm;
 		$.get(path,
 	            function(data) {
@@ -125,7 +143,7 @@ function gosearch(){
 	            },
 	            'jsonp');
 		
-        
+		   
 			/*$.getJSON(url, function(data) { 
 				alert("hi");
 			});*/
