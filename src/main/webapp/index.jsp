@@ -23,16 +23,6 @@ function init(){
     }
 }
 
-/*
-function getUrlVars() {
-    var vars = {};
-    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
-        vars[key] = value;
-    });
-    return vars;
-}
-*/
-
 function filter(choice){
 	//filtered+=[choice];
 	if($("#filters input[value*='"+choice+"']").val()=="Popular"||$("#filters input[value*='"+choice+"']").val()=="New")
@@ -90,84 +80,16 @@ function announcements(filter){
 	$('#announcements').html(contents);
 }
 
-//function gosearch(form){
-function gosearch(){	
-	//alert($("#searchzone input[id*='search']").val());
-	//var url='http://open.nysenate.gov/legislation/api/json/search/'+$("#search").val()+'/1/20?callback=?';
-	//var url='http://open.nysenate.gov/legislation/2.0/search.json?term='+$("#search").val()'&callback=stuff';
-	$("#filters.second").css('display','none');
 
-	//var patt=new RegExp('(<br>)?','');
-	//$("#searchzone").html($("#searchzone").html().replace(patt,""));
+function gosearch(){	
+	$("#filters.second").css('display','none');
 
 	$(window).unbind('resize');
 	$('#searchzone').animate({top: '-10px',width: '100%', height:'70px', left: '-20px'},200,function(){
-	    /*
-	    $.each(data.response.results, function(i,item){
-            if(odd=='odd')
-                odd='';
-            else
-                odd='odd';
-            contents+='<div id="'+odd+'">'+ 'Name: <a href=view' + item.otype + '.jsp?oid=' + item.oid + '>' + item.oid +'</a> | Type: ' + item.otype +  '</div><br/>';      
-        });
 
-        $('#content').html(contents);
-        $('#content').css('display','block');
-        $('#contentfilters').css('display','block');
-        $('#breadcrumbs').css('display','block');
-        */
-	    
-		//var term = form.search.value;
-		
-        showSearchResults(searchTerm);
-		/*
-		var path="http://directory.nysenate.gov/legislation/2.0/search.jsonp?term="+searchTerm;
-		$.get(path,
-	            function(data) {
-	            console.log();
-	            var contents=[];
-	            var odd;
-	            
-	            $.each(data.response.results, function(i,item){
-	            	if(odd=='odd')
-	                    odd='';
-	                else
-	                    odd='odd';
-	                contents+='<div id="'+odd+'">'+ 'Name: <a href=view' + item.otype + '.jsp?oid=' + item.oid + '>' + item.oid +'</a> | Type: ' + item.otype +  '</div><br/>';	     
-	            });
-
-	            $('#content').html(contents);
-	            $('#content').css('display','block');
-	            $('#contentfilters').css('display','block');
-	            $('#breadcrumbs').css('display','block');
-	            //alert(data.response.metadata.totalresults);
-	            },
-	            'jsonp');
-		*/
-		   
-			/*$.getJSON(url, function(data) { 
-				alert("hi");
-			});*/
+    showSearchResults(searchTerm);
 			
-			/*
-			var everything = popular.concat(newstuff);
-			odd='odd';
-			contents=[];
-			for (article in everything)
-			{	
-				if(odd=='odd')
-					odd='';
-				else
-					odd='odd';
-				contents+='<div id="'+odd+'">'+everything[article]+'</div><br/>';
-			}
-			$('#content').html(contents);
-			$('#content').css('display','block');
-			$('#contentfilters').css('display','block');
-			$('#breadcrumbs').css('display','block');
-			*/
-			
-	});
+});
 	//////////////////////////////////////////////////////////////////////////////////////////////////
 	//
 	//                     For dynamic object resizing and page centering
@@ -227,7 +149,7 @@ function order(choice){
     </form>
     
 	</div>
-    <div id="breadcrumbs"><a href="">Home</a> Search</div>
+    <div id="breadcrumbs"><a href="index.jsp">Home</a> Search</div>
     <div id="filters" class="second">
     	<input type="button" value="Popular" onclick="filter('Popular')" id="clicked"/>
     	<input type="button" value="New" onclick="filter('New')" id="unclicked"/>

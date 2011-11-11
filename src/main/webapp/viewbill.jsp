@@ -7,10 +7,16 @@
 <script type="text/javascript" src="openlegui.js"></script>
 
 <title>OpenLegislation</title>
-<link href="openstyles.css" rel="stylesheet" type="text/css" />
+<link href="content.css" rel="stylesheet" type="text/css" />
 </head>
 <script type="text/javascript">
 function init(){
+	$('#searchzone').animate({top: '-10px',width: '100%', height:'70px', left: '-20px'},200,function(){
+
+	    //showSearchResults(searchTerm);
+	            
+	});
+	
 	var oid = getUrlVars()["oid"];
 	
 	//removes the hashtag from the GET parameter if it exists. this is a quick fix but should be implemented better in the javascript library
@@ -24,10 +30,10 @@ function init(){
             function(data) {
 		         var contents=[];
 		         var anchorText=[];	         
-
+		         anchorText='<b>Quick Navigation</b>';
 		         var title='<h2>' + data.response.results[0].data.bill.senateBillNo + ': ' + data.response.results[0].data.bill.title + '</h2>';
 		         $("#billTitle").html(title);
-		         anchorText+='<a href="#billTitle">Title</a>';	         
+		         anchorText+='<hr><a href="#billTitle">Title</a>';	         
 		         
 			     if (data.response.results[0].data.bill.memo!=undefined){
 				     temp=data.response.results[0].data.bill.memo;
@@ -46,9 +52,7 @@ function init(){
                      anchorText+='</br><a href="#fulltext">Full Text</a>';
                  }
                  
-		         $("#anchors").html(anchorText);
-		         
-
+		         $("#anchors").append(anchorText);
             },
     'jsonp');
 	
@@ -58,7 +62,10 @@ function init(){
 
 <body onload="init()">
 
-
+<div id="content">
+    <div id="anchors">
+    </div>
+    
     <div id="billTitle">
     </div>
     
@@ -79,8 +86,8 @@ function init(){
     
     <div id="fulltext">
     </div>
-    
-    <div id="anchors">
-    </div>
+
+
+ </div>
 </body>
 </html>

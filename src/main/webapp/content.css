@@ -1,0 +1,22 @@
+@CHARSET "UTF-8";
+body {
+    font-family: "Courier New", Courier, monospace;
+    background-color:#F4F9FF;
+}
+
+#content {
+    width: 95%;
+    background-color:#FFFFFF;
+    margin-left:auto;
+    margin-right:auto;
+    padding:10px;
+}
+
+#anchors{
+    position:fixed;
+    top: 10px;
+    right: 10px;
+    background-color:#D9E5FF;
+    padding:10px;
+    border:3px solid #446CC7;
+}
