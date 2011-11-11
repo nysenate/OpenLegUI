@@ -119,7 +119,8 @@ function gosearch(){
 	    
 		//var term = form.search.value;
 		
-		
+        showSearchResults(searchTerm);
+		/*
 		var path="http://directory.nysenate.gov/legislation/2.0/search.jsonp?term="+searchTerm;
 		$.get(path,
 	            function(data) {
@@ -142,7 +143,7 @@ function gosearch(){
 	            //alert(data.response.metadata.totalresults);
 	            },
 	            'jsonp');
-		
+		*/
 		   
 			/*$.getJSON(url, function(data) { 
 				alert("hi");
