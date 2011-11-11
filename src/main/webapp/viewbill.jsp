@@ -23,17 +23,11 @@ function init(){
 	$.get(path,
             function(data) {
 		         var contents=[];
-		         var anchorText=[];
-		         //var title="";
-		         var temp="";
-		         
+		         var anchorText=[];	         
 
 		         var title='<h2>' + data.response.results[0].data.bill.senateBillNo + ': ' + data.response.results[0].data.bill.title + '</h2>';
 		         $("#billTitle").html(title);
-		         anchorText+='<a href="#billTitle">Title</a>';
-
-		         //contents+='<h2>' + data.response.results[0].data.bill.senateBillNo + ': ' + data.response.results[0].data.bill.title + '</h2>';
-		         
+		         anchorText+='<a href="#billTitle">Title</a>';	         
 		         
 			     if (data.response.results[0].data.bill.memo!=undefined){
 				     temp=data.response.results[0].data.bill.memo;
@@ -57,16 +51,6 @@ function init(){
 
             },
     'jsonp');
-    
-	/*var myFile = document.location.toString();
-	if (myFile.match('#')) { // the URL contains an anchor
-	  // click the navigation item corresponding to the anchor
-	  var myAnchor = '#' + myFile.split('#')[1];
-	  //alert(myAnchor);
-	  //$(myAnchor).localScroll();
-	}
-	*/
-	//$('#'+anchorvalue).localScroll();
 	
 }
 
