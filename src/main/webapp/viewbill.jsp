@@ -4,6 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+<script type="text/javascript" src="openlegui.js"></script>
 
 <title>OpenLegislation</title>
 <link href="openstyles.css" rel="stylesheet" type="text/css" />
@@ -11,42 +12,91 @@
 <script type="text/javascript">
 function init(){
 	var oid = getUrlVars()["oid"];
+	
+	//removes the hashtag from the GET parameter if it exists. this is a quick fix but should be implemented better in the javascript library
+	if (oid.indexOf("#")!=-1){
+		   oid=oid.substring(0,oid.indexOf("#"));
+	}
+	
 	var path="http://directory.nysenate.gov/legislation/2.0/bill/" + oid + ".jsonp?";
-	//$('#content').html(path);
+
 	$.get(path,
             function(data) {
 		         var contents=[];
+		         var anchorText=[];
+		         //var title="";
 		         var temp="";
+		         
 
-		         contents+='<h2>' + data.response.results[0].data.bill.senateBillNo + ': ' + data.response.results[0].data.bill.title + '</h2>';
+		         var title='<h2>' + data.response.results[0].data.bill.senateBillNo + ': ' + data.response.results[0].data.bill.title + '</h2>';
+		         $("#billTitle").html(title);
+		         anchorText+='<a href="#billTitle">Title</a>';
 
+		         //contents+='<h2>' + data.response.results[0].data.bill.senateBillNo + ': ' + data.response.results[0].data.bill.title + '</h2>';
+		         
+		         
 			     if (data.response.results[0].data.bill.memo!=undefined){
 				     temp=data.response.results[0].data.bill.memo;
 				     var memo=temp.replace(/\n/gi, "<br/>");
-				     contents+=memo;
+				     //$(".memo").html(memo);
+				     //contents+=memo;
+				     $("#memo").html(memo);
+				     anchorText+='</br><a href="#memo">Memo</a>';
 			     }
+			     
 		         if (data.response.results[0].data.bill.fulltext!=undefined){
                      temp=data.response.results[0].data.bill.fulltext;
                      var fulltext=temp.replace(/\n/gi, "<br/>");
-                     contents+=fulltext; 
+                     //contents+=fulltext; 
+                     $("#fulltext").html(fulltext);
+                     anchorText+='</br><a href="#fulltext">Full Text</a>';
                  }
-                 temp="";
-		       
-		         $('body').html(contents);
+                 
+		         $("#anchors").html(anchorText);
+		         
+
             },
     'jsonp');
+    
+	/*var myFile = document.location.toString();
+	if (myFile.match('#')) { // the URL contains an anchor
+	  // click the navigation item corresponding to the anchor
+	  var myAnchor = '#' + myFile.split('#')[1];
+	  //alert(myAnchor);
+	  //$(myAnchor).localScroll();
+	}
+	*/
+	//$('#'+anchorvalue).localScroll();
+	
 }
 
-function getUrlVars() {
-    var vars = {};
-    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
-        vars[key] = value;
-    });
-    return vars;
-}
 </script>
 
 <body onload="init()">
 
+
+    <div id="billTitle">
+    </div>
+    
+    <div id="actions">
+    </div>
+    
+    <div id="meetings">
+    </div>
+    
+    <div id="calendars">
+    </div>
+    
+    <div id="votes">
+    </div>
+    
+    <div id="memo">
+    </div>
+    
+    <div id="fulltext">
+    </div>
+    
+    <div id="anchors">
+    </div>
 </body>
 </html>

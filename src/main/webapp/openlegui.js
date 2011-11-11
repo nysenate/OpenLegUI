@@ -1,3 +1,4 @@
+//allows you to pull parameters from the url. especially useful for GET requests
 function getUrlVars() {
     var vars = {};
     var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
@@ -6,6 +7,7 @@ function getUrlVars() {
     return vars;
 }
 
+//performs a search according to the provided search term. pulls the results and places them in the page
 function showSearchResults(term){	
 	var path="http://directory.nysenate.gov/legislation/2.0/search.jsonp?term="+term;
 	$.get(path,
