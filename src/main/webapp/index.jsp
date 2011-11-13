@@ -7,11 +7,13 @@
 <script type="text/javascript" src="openlegui.js"></script>
 
 <script type="text/javascript">
+//set up the necessarey variables
 var filtered=[];
 var popular=['Puppy bill', 'Meeting about puppy', 'Transcript of barking puppy', 'A puppy taking action', 'People voting on puppies'];
 var newstuff=['This happened just now','This happened after that','Wow this happened today','Some other things happened recently too','Still recent enough to show up'];
 var searchTerm = getUrlVars()["search"];
 var pageId = getUrlVars()["pageId"];
+//if there was no pageId parameter, set it to 1
 if (pageId==undefined){
 	pageId=1;
 }
@@ -22,7 +24,8 @@ function init(){
 	$(window).bind('resize', function(){$("#searchzone").css("left", ( $(window).width() - $("#searchzone").width()) / 2+$(window).scrollLeft() + "px");});
 	
 	announcements('popular');
-	
+
+	//if a search term was defined, perform the search
     if (searchTerm!=undefined){
     	   gosearch();
     }
@@ -92,8 +95,7 @@ function gosearch(){
 	$(window).unbind('resize');
 	$('#searchzone').animate({top: '-10px',width: '100%', height:'70px', left: '-20px'},200,function(){
 
-    showSearchResults(pageId, 20, searchTerm);
-			
+    showSearchResults(pageId, 20, searchTerm);	
 });
 	//////////////////////////////////////////////////////////////////////////////////////////////////
 	//
