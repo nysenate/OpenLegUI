@@ -11,6 +11,11 @@ var filtered=[];
 var popular=['Puppy bill', 'Meeting about puppy', 'Transcript of barking puppy', 'A puppy taking action', 'People voting on puppies'];
 var newstuff=['This happened just now','This happened after that','Wow this happened today','Some other things happened recently too','Still recent enough to show up'];
 var searchTerm = getUrlVars()["search"];
+var pageId = getUrlVars()["pageId"];
+if (pageId==undefined){
+	pageId=1;
+}
+
 function init(){
 	
 	$("#searchzone").css("left", ( $(window).width() - $("#searchzone").width()) / 2+$(window).scrollLeft() + "px");
@@ -87,7 +92,7 @@ function gosearch(){
 	$(window).unbind('resize');
 	$('#searchzone').animate({top: '-10px',width: '100%', height:'70px', left: '-20px'},200,function(){
 
-    showSearchResults(searchTerm);
+    showSearchResults(pageId, 20, searchTerm);
 			
 });
 	//////////////////////////////////////////////////////////////////////////////////////////////////
