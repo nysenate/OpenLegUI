@@ -33,11 +33,16 @@ function init(){
 		         var contents=[];
 		         var anchorText=[];	         
 		         anchorText='<b>Quick Navigation</b>';
-		         var title='<h2>' + data.response.results[0].data.bill.senateBillNo + ': ' + data.response.results[0].data.bill.title + '</h2>';
+		         var billInfo=data.response.results[0].data.bill.senateBillNo + ': ' + data.response.results[0].data.bill.title;
+		         billInfo+='<br/>Sponsor: ' + data.response.results[0].data.bill.sponsor.fullname;
+		         billInfo+=' Committee: ' + data.response.results[0].data.bill.currentCommittee;
+		         billInfo+='<br/>Law Section: ' + data.response.results[0].data.bill.lawSection;
+		         billInfo+=' Law: ' + data.response.results[0].data.bill.law;
+		         billInfo+='<br/><br/>';
 
 		         //display the title
-		         $("#billTitle").html(title);
-		         anchorText+='<hr><a href="#billTitle">Title</a>';	         
+		         $("#billInfo").html(billInfo);
+		         anchorText+='<hr><a href="#billInfo">Bill Information</a>';	         
 
 		         //if there is a memo section, display it and add it to the quick navigation
 			     if (data.response.results[0].data.bill.memo!=undefined){
@@ -65,12 +70,11 @@ function init(){
 </script>
 
 <body onload="init()">
-
-<div id="content">
+    <div id="container">
     <div id="anchors">
     </div>
     
-    <div id="billTitle">
+    <div id="billInfo">
     </div>
     
     <div id="actions">
@@ -90,7 +94,9 @@ function init(){
     
     <div id="fulltext">
     </div>
+    
+    </div>
 
- </div>
+
 </body>
 </html>
