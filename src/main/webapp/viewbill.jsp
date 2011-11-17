@@ -33,7 +33,8 @@ function init(){
 		         var contents=[];
 		         var anchorText=[];	         
 		         anchorText='<b>Quick Navigation</b>';
-		         var billInfo=data.response.results[0].data.bill.senateBillNo + ': ' + data.response.results[0].data.bill.title;
+		         var billInfo='<h2>Bill Information</h2>';
+		         billInfo+=data.response.results[0].data.bill.senateBillNo + ': ' + data.response.results[0].data.bill.title;
 		         billInfo+='<br/>Sponsor: ' + data.response.results[0].data.bill.sponsor.fullname;
 		         billInfo+=' Committee: ' + data.response.results[0].data.bill.currentCommittee;
 		         billInfo+='<br/>Law Section: ' + data.response.results[0].data.bill.lawSection;
@@ -47,7 +48,8 @@ function init(){
 		         //if there is a memo section, display it and add it to the quick navigation
 			     if (data.response.results[0].data.bill.memo!=undefined){
 				     temp=data.response.results[0].data.bill.memo;
-				     var memo=temp.replace(/\n/gi, "<br/>");
+				     var memo='<h2>Memo</h2>';
+				     memo+=temp.replace(/\n/gi, "<br/>");
 				     $("#memo").html(memo);
 				     anchorText+='</br><a href="#memo">Memo</a>';
 			     }
@@ -55,7 +57,8 @@ function init(){
 			   //if there is a full text section, display it and add it to the quick navigation
 		         if (data.response.results[0].data.bill.fulltext!=undefined){
                      temp=data.response.results[0].data.bill.fulltext;
-                     var fulltext=temp.replace(/\n/gi, "<br/>");
+                     var fulltext='<h2>Full Text</h2>';
+                     fulltext+=temp.replace(/\n/gi, "<br/>");
                      //contents+=fulltext; 
                      $("#fulltext").html(fulltext);
                      anchorText+='</br><a href="#fulltext">Full Text</a>';
@@ -70,6 +73,7 @@ function init(){
 </script>
 
 <body onload="init()">
+<%@ include file="header.jsp" %>
     <div id="container">
     <div id="anchors">
     </div>
