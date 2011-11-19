@@ -9,7 +9,7 @@
         
         #main {  
             float: left; 
-            margin-right:10px;
+            margin-right:30px;
             
         }
         
@@ -19,8 +19,8 @@
             border-radius: 15px;
             padding:5px;
         }
-        #content{
-        margin:0px 15px 10px 15px;
+        #wrap{
+        margin:150px 15px 10px 15px;
         padding:0px 15px 10px 15px;
         float:left;
         background-color:#FFFFFF;

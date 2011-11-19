@@ -95,7 +95,7 @@ function init(){
 
 <body onload="init()">
 <%@ include file="header.jsp" %>
-<div id="content">
+<div id="wrap">
 
     <div id="main">
     
