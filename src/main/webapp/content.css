@@ -9,8 +9,8 @@
         
         #main {  
             float: left; 
-            margin-right:30px;
-            
+            margin-right:30px;  
+            width:70%;
         }
         
         #anchors {    
@@ -18,63 +18,12 @@
             border:3px solid #446CC7;  
             border-radius: 15px;
             padding:5px;
+            
         }
         #wrap{
-        margin:150px 15px 10px 15px;
-        padding:0px 15px 10px 15px;
+        margin:135px 15px 10px 15px;
+        padding:15px 15px 10px 15px;
         float:left;
         background-color:#FFFFFF;
         
         }
-/*
-@CHARSET "UTF-8";
-
-body
-{
-    margin: 0;
-    padding: 0;
-}
-#page-wrap {
- width:100%;
-  margin: 15px auto;
-
-}
-
-
-#main{
-	width:600px;
-   
-    padding:0 20px 0 20px;
-    background-color:#F4F9FF;
-    float: left;
-    margin: 0 0 10px 0;
-    width: 70px;
-    
-}
-
-#sidebar{
-	float: right;
-	width:200px;
-	
-}
-
-
-
-#content {
-    background-color:#FFFFFF;
-
-}
-
-
-#anchors{
-
-  width: 190px; 
-  
-   padding: 5px;
-   background-color:#D9E5FF;
-
-    border:3px solid #446CC7;
-    float:left;
-
-}
-*/
