@@ -4,6 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+
 <script type="text/javascript" src="openlegui.js"></script>
 
 <title>OpenLegislation</title>
@@ -78,9 +79,30 @@ function init(){
                //if there is a full text section, display it and add it to the quick navigation
                  if (data.response.results[0].data.bill.fulltext!=undefined){
                      temp=data.response.results[0].data.bill.fulltext;
+                     //console.log(temp);
+                     var index=0;
+                     var firstMatch;
+                     var secondMatch;
+                     do {
+                    	    //index++;
+                    	    firstMatch=temp.indexOf("\n\n", index);
+                    	    secondMatch=temp.indexOf("\n\n", firstMatch+1);
+                    	    index=secondMatch+1;
+                    	    //alert("1: " + firstMatch + " 2: " + secondMatch);
+                     }
+                     while (secondMatch!=-1);
+                     //var firstMatch=temp.indexOf("\n\n", 0);
+                     //var secondMatch=temp.indexOf("\n\n", firstMatch+1);
+                     //firstMatch+=4;
+                     //var temp2=temp.substring(firstMatch, secondMatch);
+                     //alert(temp2.match(/\n/gi).length-2);
+                     //alert("1: " + firstMatch + " 2: " + secondMatch);
+                     //alert(temp.match(/\n\n/gi).length);
                      var fulltext='<h2>Full Text</h2>';
+                     //fulltext+=temp;
                      fulltext+=temp.replace(/\n/gi, "<br/>");
-                     //contents+=fulltext; 
+                     //fulltext+=temp.replace(/\n/gi, "<b>New</b>");
+                     
                      $("#fulltext").html(fulltext);
                      anchorText+='<br/><a href="#fulltext">Full Text</a>';
                  }
