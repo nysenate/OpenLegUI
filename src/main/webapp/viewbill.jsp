@@ -78,69 +78,70 @@ function init(){
 
                //if there is a full text section, display it and add it to the quick navigation
                  if (data.response.results[0].data.bill.fulltext!=undefined){
-                     temp=data.response.results[0].data.bill.fulltext;
-                     //console.log(temp);
-                     var textArray=[];
+                     //initialize variables
+                     fullText=data.response.results[0].data.bill.fulltext;
+                     var fullTextArray=[];
                      var index=0;
-                     var firstMatch;
                      var beginning;
                      var end;
                      var numBreaks;
-                     var secondMatch;
                      var tempString;
                      beginning=0;
-                     end=temp.indexOf("\n\n", 0);
-                     tempString=temp.substring(beginning, end);
-                     textArray.push(tempString);
-                     //alert (tempString);
+
+                     //for the first block, select only the first double line break since there won't be one at the beginning of the text
+                     end=fullText.indexOf("\n\n", 0);
+                     //get the string text and push it to the array
+                     tempString=fullText.substring(beginning, end);
+                     fullTextArray.push(tempString);
 
                      while (beginning!=-1 || end!=-1){
-                         //alert(tempString);
+                    	   //set beginning to the previous end
                     	   beginning=end;
-                    	   end=temp.indexOf("\n\n", beginning+1);
+                    	   //the new end is the next double line break
+                    	   end=fullText.indexOf("\n\n", beginning+1);
+                    	   //if there isn't another double line break, it has reached the end of the text
                     	   if (end==-1){
-                    		   end=temp.length;
+                    		   end=fullText.length;
                     	   }
-                    	   tempString=temp.substring(beginning, end);
-                    	   
-                    	   
+
+                    	   //pull out the string between beginning and end
+                    	   tempString=fullText.substring(beginning, end);
+
                     	   if (tempString==""){
                         	   break;
                     	   }
-                    	   textArray.push(tempString);
-                    	   /*numBreaks=tempString.match(/\n/gi).length-1;
-                    	   if (numBreaks>10){
-                        	  //alert (tempString);
-                        	  var copyText=tempString;
-                        	  tempString='<div class="bigBlock">' + copyText + '</div>';
-                        	  //alert(tempString);
-                        	  temp=temp.replace(copyText, tempString);
-                        	  end=end+28;
-                    	   }
-                    	   */
-                    	   
+                    	   //push the text to the array
+                    	   fullTextArray.push(tempString);
                     	   
                     	   if (end==-1 || beginning==-1){
                     		    break;
                     	   }
                      }     
-                     for (var i = 0; i < textArray.length; i++) {
-                    	 var currentText=textArray[i];
+                     
+                     //iterate through the text array
+                     for (var i = 0; i < fullTextArray.length; i++) {
+                    	 var currentText=fullTextArray[i];
+                    	 //get the number of line breaks within the text
                     	 numBreaks=currentText.match(/\n/gi).length-1;
+                    	 //if the numbe is greater than 10, reformat it so it is now within a div
                     	 if (numBreaks>10){
                     		    currentText='<div class="bigBlock">' + currentText + '</div>';
-                    		    //alert (currentText);
+                    		    
                     	 }
-                    	 textArray[i]=currentText;
-                         
+                    	 fullTextArray[i]=currentText;    
                      }
-                     temp="";
-                     for (var i = 0; i < textArray.length; i++) {
-                    	  temp+=textArray[i];
+                     
+                     fullText="";
+                     
+                     //iterate through the array and build the string with all of the full text
+                     for (var i = 0; i < fullTextArray.length; i++) {
+                    	  fullText+=fullTextArray[i];
                      }
+                     
+                     //put the fulltext in the fulltext div and add it to the navigation bar
                      var fulltext='<h2>Full Text</h2>';
                      
-                     fulltext+=temp.replace(/\n/gi, "<br/>");      
+                     fulltext+=fullText.replace(/\n/gi, "<br/>");      
                      $("#fulltext").html(fulltext);
                      anchorText+='<br/><a href="#fulltext">Full Text</a>';
                  }
