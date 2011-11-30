@@ -80,29 +80,67 @@ function init(){
                  if (data.response.results[0].data.bill.fulltext!=undefined){
                      temp=data.response.results[0].data.bill.fulltext;
                      //console.log(temp);
+                     var textArray=[];
                      var index=0;
                      var firstMatch;
+                     var beginning;
+                     var end;
+                     var numBreaks;
                      var secondMatch;
-                     do {
-                    	    //index++;
-                    	    firstMatch=temp.indexOf("\n\n", index);
-                    	    secondMatch=temp.indexOf("\n\n", firstMatch+1);
-                    	    index=secondMatch+1;
-                    	    //alert("1: " + firstMatch + " 2: " + secondMatch);
+                     var tempString;
+                     beginning=0;
+                     end=temp.indexOf("\n\n", 0);
+                     tempString=temp.substring(beginning, end);
+                     textArray.push(tempString);
+                     //alert (tempString);
+
+                     while (beginning!=-1 || end!=-1){
+                         //alert(tempString);
+                    	   beginning=end;
+                    	   end=temp.indexOf("\n\n", beginning+1);
+                    	   if (end==-1){
+                    		   end=temp.length;
+                    	   }
+                    	   tempString=temp.substring(beginning, end);
+                    	   
+                    	   
+                    	   if (tempString==""){
+                        	   break;
+                    	   }
+                    	   textArray.push(tempString);
+                    	   /*numBreaks=tempString.match(/\n/gi).length-1;
+                    	   if (numBreaks>10){
+                        	  //alert (tempString);
+                        	  var copyText=tempString;
+                        	  tempString='<div class="bigBlock">' + copyText + '</div>';
+                        	  //alert(tempString);
+                        	  temp=temp.replace(copyText, tempString);
+                        	  end=end+28;
+                    	   }
+                    	   */
+                    	   
+                    	   
+                    	   if (end==-1 || beginning==-1){
+                    		    break;
+                    	   }
+                     }     
+                     for (var i = 0; i < textArray.length; i++) {
+                    	 var currentText=textArray[i];
+                    	 numBreaks=currentText.match(/\n/gi).length-1;
+                    	 if (numBreaks>10){
+                    		    currentText='<div class="bigBlock">' + currentText + '</div>';
+                    		    //alert (currentText);
+                    	 }
+                    	 textArray[i]=currentText;
+                         
                      }
-                     while (secondMatch!=-1);
-                     //var firstMatch=temp.indexOf("\n\n", 0);
-                     //var secondMatch=temp.indexOf("\n\n", firstMatch+1);
-                     //firstMatch+=4;
-                     //var temp2=temp.substring(firstMatch, secondMatch);
-                     //alert(temp2.match(/\n/gi).length-2);
-                     //alert("1: " + firstMatch + " 2: " + secondMatch);
-                     //alert(temp.match(/\n\n/gi).length);
+                     temp="";
+                     for (var i = 0; i < textArray.length; i++) {
+                    	  temp+=textArray[i];
+                     }
                      var fulltext='<h2>Full Text</h2>';
-                     //fulltext+=temp;
-                     fulltext+=temp.replace(/\n/gi, "<br/>");
-                     //fulltext+=temp.replace(/\n/gi, "<b>New</b>");
                      
+                     fulltext+=temp.replace(/\n/gi, "<br/>");      
                      $("#fulltext").html(fulltext);
                      anchorText+='<br/><a href="#fulltext">Full Text</a>';
                  }
