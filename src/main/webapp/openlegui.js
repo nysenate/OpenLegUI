@@ -1,3 +1,5 @@
+
+
 //allows you to pull parameters from the url. especially useful for GET requests
 function getUrlVars() {
     var vars = {};

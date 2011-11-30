@@ -11,6 +11,10 @@
 <link href="content.css" rel="stylesheet" type="text/css" />
 </head>
 <script type="text/javascript">
+$(document).ready(function() {
+
+	
+	});
 $(function() {
     var offset = $("#anchors").offset();
     var topPadding = 15;
@@ -86,6 +90,7 @@ function init(){
                      var end;
                      var numBreaks;
                      var tempString;
+                     var processedText;
                      beginning=0;
 
                      //for the first block, select only the first double line break since there won't be one at the beginning of the text
@@ -120,13 +125,15 @@ function init(){
                      
                      //iterate through the text array
                      for (var i = 0; i < fullTextArray.length; i++) {
+                         processedText="";
                     	 var currentText=fullTextArray[i];
                     	 //get the number of line breaks within the text
                     	 numBreaks=currentText.match(/\n/gi).length-1;
                     	 //if the numbe is greater than 10, reformat it so it is now within a div
                     	 if (numBreaks>10){
-                    		    currentText='<div class="bigBlock">' + currentText + '</div>';
-                    		    
+                    		    //processedText='<a href="#" class="trigger">Toggle Text</a>';
+                    		    processedText+='<div class="toggle">' + currentText + '</div>';
+                    		    currentText=processedText;	    
                     	 }
                     	 fullTextArray[i]=currentText;    
                      }
