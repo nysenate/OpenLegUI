@@ -17,6 +17,16 @@ var pageId = getUrlVars()["pageId"];
 if (pageId==undefined){
 	pageId=1;
 }
+var filters = getUrlVars()["filters"].split(',');
+if(filters!=undefined){
+	filtered = filters;
+	for(f in filters)
+	{
+		var temp = filters[f].charAt(0).toUpperCase() + filters[f].slice(1)+"s";
+		filter(temp);
+	}
+}
+
 
 function init(){
 	
@@ -32,7 +42,7 @@ function init(){
 }
 
 function filter(choice){
-	//filtered+=[choice];
+	
 	if($("#filters input[value*='"+choice+"']").val()=="Popular"||$("#filters input[value*='"+choice+"']").val()=="New")
 	{
 		if($("#filters input[value*='"+choice+"']").attr('id')=='unclicked')
@@ -54,9 +64,34 @@ function filter(choice){
 	else
 	{
 		if($("#filters input[value*='"+choice+"']").attr('id')=='unclicked')
+		{
 			$("#filters input[value*='"+choice+"']").attr('id','clicked');
+		    filtered.push(choice.substring(0, choice.length-1).toLowerCase());
+		    
+		    if(results!=null){
+		    	  attr = getUrlVars();
+		    	  var newurl = 'search='+attr['search']+'&filters='+filtered;
+		    	  parent.location.hash=newurl; 
+		    }
+		}
 		else
+		{
 			$("#filters input[value*='"+choice+"']").attr('id','unclicked');
+			
+		    if(filtered.indexOf(choice.substring(0, choice.length-1).toLowerCase())!=-1)
+		    {
+			    filtered.splice(filtered.indexOf(choice.substring(0, choice.length-1).toLowerCase()), 1);
+		         if(results!=null){
+	                  attr = getUrlVars();
+	                  if(filtered[0]!=null)
+	                	   var newurl = 'search='+$('#search').val()+'&filters='+filtered;
+	                  else
+	                	  var newurl = 'search='+$('#search').val();
+	                  parent.location.hash=newurl; 
+	            }
+		    }
+		}
+		
 	}
 }
 
@@ -91,11 +126,20 @@ function announcements(filter){
 
 function gosearch(){	
 	$("#filters.second").css('display','none');
-
 	$(window).unbind('resize');
 	$('#searchzone').animate({top: '-10px',width: '100%', height:'70px', left: '-20px'},200,function(){
-
-    showSearchResults(pageId, 20, searchTerm);	
+	var newurl = 'search='+$('#search').val();
+	if(filtered[0]!=null)
+	{
+	    newurl+='&filters='+filtered;
+	}
+	parent.location.hash=newurl;
+    //showSearchResults(pageId, 20, searchTerm);
+	if (pageId==undefined){
+	    pageId=1;
+	}
+	showSearchResults(pageId, 20, $('#search').val());
+    
 });
 	//////////////////////////////////////////////////////////////////////////////////////////////////
 	//
@@ -143,17 +187,17 @@ function order(choice){
     	<input type="button" value="Transcripts" onclick="filter('Transcripts')" id="unclicked"/>
         <input type="button" value="Actions" onclick="filter('Actions')" id="unclicked"/>
         <input type="button" value="Votes" onclick="filter('Votes')" id="unclicked"/>
-    <!--  
-	<form name="search" action="" method="GET">
-		<input type="text" name="search" id="search" value="Start searching here!" style="color:black;"/> 
-        <input type="button" value="Go" onclick="gosearch(this.form)" id="go"/>
-	</form>
-	-->
+     
 	
+		<input type="text" name="search" id="search" value="Start searching here!" style="color:black;"/> 
+        <input type="button" value="Go" onclick="gosearch()" id="go"/>
+	
+	
+	<!-- 
 	<form name="input" action="" method="get">
     <input type="text" name="search" id="search" value="Start searching here!" style="color:black;"/> 
-    <input type="submit" value="Submit" />
-    </form>
+    <input type="submit" value="Search" id="go"/>
+    </form> -->
     
 	</div>
     <div id="breadcrumbs"><a href="index.jsp">Home</a> Search</div>
@@ -166,10 +210,11 @@ function order(choice){
 </div>
 <div id="contentfilters">
 	Order By:<br/>
+	<input type="button" value="None" onclick="order('None')" id="clicked"/>
 	<input type="button" value="Best Fit" onclick="order('Best Fit')" id="unclicked"/>
     <input type="button" value="Recent Updates" onclick="order('Recent Updates')" id="unclicked"/>
     <input type="button" value="Oldest Updates" onclick="order('Oldest Updates')" id="unclicked"/>
-    <input type="button" value="Committee" onclick="order('Committee')" id="unclicked"/>
+    <input type="button" value="Committee" onclick="order('Committee')" id="unclicked"/> 
 </div>
 <div id="content">
 	
