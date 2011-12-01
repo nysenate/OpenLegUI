@@ -11,10 +11,18 @@
 <link href="content.css" rel="stylesheet" type="text/css" />
 </head>
 <script type="text/javascript">
-$(document).ready(function() {
-
+$(document).ready(function(){
 	
+	$(".toggle").hide();
+
+	$("h2.trigger").click(function(){
+	    $(this).toggleClass("active").next().slideToggle("slow");
+	    return false;
 	});
+   
+    
+});
+
 $(function() {
     var offset = $("#anchors").offset();
     var topPadding = 15;
@@ -100,49 +108,51 @@ function init(){
                      fullTextArray.push(tempString);
 
                      while (beginning!=-1 || end!=-1){
-                    	   //set beginning to the previous end
-                    	   beginning=end;
-                    	   //the new end is the next double line break
-                    	   end=fullText.indexOf("\n\n", beginning+1);
-                    	   //if there isn't another double line break, it has reached the end of the text
-                    	   if (end==-1){
-                    		   end=fullText.length;
-                    	   }
+                           //set beginning to the previous end
+                           beginning=end;
+                           //the new end is the next double line break
+                           end=fullText.indexOf("\n\n", beginning+1);
+                           //if there isn't another double line break, it has reached the end of the text
+                           if (end==-1){
+                               end=fullText.length;
+                           }
 
-                    	   //pull out the string between beginning and end
-                    	   tempString=fullText.substring(beginning, end);
+                           //pull out the string between beginning and end
+                           tempString=fullText.substring(beginning, end);
 
-                    	   if (tempString==""){
-                        	   break;
-                    	   }
-                    	   //push the text to the array
-                    	   fullTextArray.push(tempString);
-                    	   
-                    	   if (end==-1 || beginning==-1){
-                    		    break;
-                    	   }
+                           if (tempString==""){
+                               break;
+                           }
+                           //push the text to the array
+                           fullTextArray.push(tempString);
+                           
+                           if (end==-1 || beginning==-1){
+                                break;
+                           }
                      }     
                      
                      //iterate through the text array
                      for (var i = 0; i < fullTextArray.length; i++) {
                          processedText="";
-                    	 var currentText=fullTextArray[i];
-                    	 //get the number of line breaks within the text
-                    	 numBreaks=currentText.match(/\n/gi).length-1;
-                    	 //if the numbe is greater than 10, reformat it so it is now within a div
-                    	 if (numBreaks>10){
-                    		    //processedText='<a href="#" class="trigger">Toggle Text</a>';
-                    		    processedText+='<div class="toggle">' + currentText + '</div>';
-                    		    currentText=processedText;	    
-                    	 }
-                    	 fullTextArray[i]=currentText;    
+                         var currentText=fullTextArray[i];
+                         //get the number of line breaks within the text
+                         numBreaks=currentText.match(/\n/gi).length-1;
+                         //if the numbe is greater than 10, reformat it so it is now within a div
+                         if (numBreaks>10){
+                                //processedText='<a href="#" class="trigger">Toggle Text</a>';
+                                processedText+='<h2 class="trigger"><a href="#">Show/Hide Text</a></h2>';
+                               
+                                processedText+='<div class="toggle">' + currentText + '</div>';
+                                currentText=processedText;      
+                         }
+                         fullTextArray[i]=currentText;    
                      }
                      
                      fullText="";
                      
                      //iterate through the array and build the string with all of the full text
                      for (var i = 0; i < fullTextArray.length; i++) {
-                    	  fullText+=fullTextArray[i];
+                          fullText+=fullTextArray[i];
                      }
                      
                      //put the fulltext in the fulltext div and add it to the navigation bar
@@ -156,8 +166,9 @@ function init(){
                  $("#anchors").append(anchorText);
             },
     'jsonp');
-    
+
 }
+
 
 </script>
 
@@ -166,6 +177,7 @@ function init(){
 <div id="wrap">
 
     <div id="main">
+    
     
         <div id="billInfo" class="box">
         </div>
