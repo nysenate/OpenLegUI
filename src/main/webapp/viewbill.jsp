@@ -14,7 +14,14 @@
 
 $('.trigger').live('click', function () {
     
-    $(this).next().slideToggle();
+    $(this).next().slideToggle('slow');
+    if ($(this).html()=='<a href="#">Expand text block</a>'){
+    	 $(this).html('<a href="#">Collapse text block</a>');
+    }
+    else{
+    	$(this).html('<a href="#">Expand text block</a>');
+    }
+   
     return false;
   });
 

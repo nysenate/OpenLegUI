@@ -5,14 +5,15 @@ var results;
 //allows you to pull parameters from the url. especially useful for GET requests
 function getUrlVars() {
     var vars = {};
-    /*var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
         vars[key] = value;
-    });*/
-    var attr = window.location.href.split('#')[1].split('&');
+    });
+    /*var attr = window.location.href.split('#')[1].split('&');
     for(a in attr){
     	
     	vars[attr[a].split('=')[0]]=attr[a].split('=')[1]
     }
+    */
     return vars;
 }
 
@@ -79,7 +80,8 @@ function breakUpText(text){
                firstSegment=currentText.substring(0, breakIndex);
                secondSegment=currentText.substring(breakIndex);
                processedText+=firstSegment + '...';
-               processedText+='<br/><br/><div class="trigger"><a href="#">Expand text block</a></div>';
+               //processedText+='<br/><br/><div class="trigger"><a href="#">Expand text block</a></div>';
+               processedText+='<div class="trigger"><a href="#">Expand text block</a></div>';
               
                //processedText+='<div class="toggle">' + currentText + '</div>';
                processedText+='<div class="toggle">' + secondSegment + '</div>';

@@ -5,7 +5,7 @@
 
 
 <div id="navzone">
-    A link
+    NYS Senate Links
 </div>
 <div id="headerzone" onload="init()">
     <a href="index.jsp"><img src="http://m.nysenate.gov/legislation/img/openleglogo.gif"/></a>
