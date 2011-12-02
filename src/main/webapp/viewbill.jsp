@@ -11,17 +11,12 @@
 <link href="content.css" rel="stylesheet" type="text/css" />
 </head>
 <script type="text/javascript">
-$(document).ready(function(){
-	
-	$(".toggle").hide();
 
-	$("h2.trigger").click(function(){
-	    $(this).toggleClass("active").next().slideToggle("slow");
-	    return false;
-	});
-   
+$('.trigger').live('click', function () {
     
-});
+    $(this).next().slideToggle();
+    return false;
+  });
 
 $(function() {
     var offset = $("#anchors").offset();
@@ -39,6 +34,9 @@ $(function() {
     });
 });
 
+function alertMe(){
+	alert("testing");
+}
 
 
 function init(){
@@ -140,7 +138,9 @@ function init(){
                          //if the numbe is greater than 10, reformat it so it is now within a div
                          if (numBreaks>10){
                                 //processedText='<a href="#" class="trigger">Toggle Text</a>';
-                                processedText+='<h2 class="trigger"><a href="#">Show/Hide Text</a></h2>';
+                                currentText=currentText.substring(3);
+                                
+                                processedText+='<br/><br/><h3 class="trigger"><a href="#">Show/Hide Text</a></h2>';
                                
                                 processedText+='<div class="toggle">' + currentText + '</div>';
                                 currentText=processedText;      
