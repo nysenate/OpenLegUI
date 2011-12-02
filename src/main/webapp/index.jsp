@@ -72,6 +72,12 @@ function filter(choice){
 		    	  attr = getUrlVars();
 		    	  var newurl = 'search='+attr['search']+'&filters='+filtered;
 		    	  parent.location.hash=newurl; 
+
+		    	  $('.pages').each(function(index) {
+		    		    $(this).attr('href',$(this).attr('href')+'&filters='+filtered);
+		    	  });
+
+		    	  gosearch();
 		    }
 		}
 		else
@@ -84,10 +90,30 @@ function filter(choice){
 		         if(results!=null){
 	                  attr = getUrlVars();
 	                  if(filtered[0]!=null)
+	                  {
 	                	   var newurl = 'search='+$('#search').val()+'&filters='+filtered;
+                         $('.pages').each(function(index) {
+                        	    oldlink = $(this).attr('href');
+                        	    oldlink = oldlink.split('&');
+                                oldlink = $(this).attr('href');
+                                oldlink = oldlink.split('&');
+                                oldlink = oldlink.slice(0,2).join('&');
+                                $(this).attr('href', oldlink);
+                                $(this).attr('href',oldlink+'&filters='+filtered);
+                          });
+	                  }
 	                  else
+	                  {
 	                	  var newurl = 'search='+$('#search').val();
-	                  parent.location.hash=newurl; 
+                         $('.pages').each(function(index) {
+                                oldlink = $(this).attr('href');
+                                oldlink = oldlink.split('&');
+                                oldlink = oldlink.slice(0,2).join('&');
+                                $(this).attr('href', oldlink);
+                          });
+	                  }
+	                  parent.location.hash=newurl;
+	                  gosearch();
 	            }
 		    }
 		}
