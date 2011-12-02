@@ -70,11 +70,12 @@ function showSearchResults(pageId, pageSize, term){
             		urlfilter = '&filters='+filtered;
             	}
             	//links='<br/>Jump to page: <a class="pages" href=#search='+term+'&pageId=1'+urlfilter+' onclick="showSearchResults(1,20,"'+term+'")">1</a> ';
-            	fun = 'showSearchResults(1,20,"'+term+'"';
+            	fun = 'showSearchResults(1,20,"'+term+'")';
             	links='<br/>Jump to page: <a class="pages" href=#search='+term+'&pageId=1'+urlfilter+' onclick='+fun+'>1</a> ';
             	//for each additional page, create a link for it
             	for (var i=2; i<pages+1; i++){
-            		links+='<a class="pages" href=#search='+term+'&pageId='+i+urlfilter+' onclick="showSearchResults('+i+',20,"'+term+'")">'+i+'</a> ';
+            		fun = 'showSearchResults('+i+',20,"'+term+'")';
+            		links+='<a class="pages" href=#search='+term+'&pageId='+i+urlfilter+' onclick='+fun+'>'+i+'</a> ';
             	}
             }showSearchResults
             
