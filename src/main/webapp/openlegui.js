@@ -5,14 +5,14 @@ var results;
 //allows you to pull parameters from the url. especially useful for GET requests
 function getUrlVars() {
     var vars = {};
-    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+    /*var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
         vars[key] = value;
-    });
-    /*var attr = window.location.href.split('#')[1].split('&');
+    });*/
+    var attr = window.location.href.split('#')[1].split('&');
     for(a in attr){
     	
     	vars[attr[a].split('=')[0]]=attr[a].split('=')[1]
-    }*/
+    }
     return vars;
 }
 
@@ -140,21 +140,27 @@ function showSearchResults(pageId, pageSize, term){
             		pages=1;
             	}
             
-            	//otherwise, perform integer division to find the number of pages needed. pages++ brings the number up to the correct value
+            	//otherwise, perform integer division to find the number of pages'+i+''+i+' needed. pages++ brings the number up to the correct value
             	else {
             		pages = ~~(data.response.metadata.totalresults/pageSize);
             		pages++;
             	}
             
             	//sets up the first page link, which will always display no matter the number of results
-            	var links=[];
-            	links='<br/>Jump to page: <a href=?search='+term+'&pageId=1>1</a> ';
-            
+            	var links=[];'+i+'
+            	urlfilter = '';
+            	if(filtered[0]!=null)
+            	{
+            		urlfilter = '&filters='+filtered;
+            	}
+            	//links='<br/>Jump to page: <a class="pages" href=#search='+term+'&pageId=1'+urlfilter+' onclick="showSearchResults(1,20,"'+term+'")">1</a> ';
+            	fun = 'showSearchResults(1,20,"'+term+'"';
+            	links='<br/>Jump to page: <a class="pages" href=#search='+term+'&pageId=1'+urlfilter+' onclick='+fun+'>1</a> ';
             	//for each additional page, create a link for it
             	for (var i=2; i<pages+1; i++){
-            		links+='<a href=?search='+term+'&pageId='+i+'>'+i+'</a> ';
+            		links+='<a class="pages" href=#search='+term+'&pageId='+i+urlfilter+' onclick="showSearchResults('+i+',20,"'+term+'")">'+i+'</a> ';
             	}
-            }
+            }showSearchResults
             
             //display the contents
             $('#content').html(contents);
