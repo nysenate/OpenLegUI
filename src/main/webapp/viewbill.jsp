@@ -62,27 +62,71 @@ function init(){
                  var contents=[];
                  var anchorText=[];          
                  anchorText='<b>Quick Navigation: </b>';
-                 var billInfo='<h2>Bill Information</h2>';
-                 billInfo+=data.response.results[0].data.bill.senateBillNo + ': ' + data.response.results[0].data.bill.title;
-                 billInfo+='<br/>Sponsor: ' + data.response.results[0].data.bill.sponsor.fullname;
-                 billInfo+=' Committee: ' + data.response.results[0].data.bill.currentCommittee;
-                 billInfo+='<br/>Law Section: ' + data.response.results[0].data.bill.lawSection;
-                 billInfo+=' Law: ' + data.response.results[0].data.bill.law;
-                 billInfo+='<br/><br/>';
 
-                 //display the title
+                 //display the bill information
+                 var billInfo='<h1>' + data.response.results[0].data.bill.senateBillNo + ': ' + data.response.results[0].data.bill.title ;
+                 billInfo+='<h2>Bill Information</h2></h1><div class="hr"></div>';
+
+                 billInfo+='<b>Sponsor:</b> ';
+                 if (data.response.results[0].data.bill.sponsor!=null){
+                     billInfo+=data.response.results[0].data.bill.sponsor.fullname;
+                 }
+                 
+                 billInfo+='<br/><b>Co-sponsor(s):</b> ';
+                 if (data.response.results[0].data.bill.coSponsors!=null){               	    
+                       for (var i=0; i<data.response.results[0].data.bill.coSponsors.length; i++){   
+                    	    if (i!= data.response.results[0].data.bill.coSponsors.length-1){
+                    	    	   billInfo+= data.response.results[0].data.bill.coSponsors[i].fullname + ', ';
+                    	    }
+                    	    else {
+                            billInfo+= data.response.results[0].data.bill.coSponsors[i].fullname;
+                            }
+                       }
+                 }
+
+                 billInfo+='<br/><b>Multi-sponsor(s):</b> ';
+                 if (data.response.results[0].data.bill.multiSponsors!=null){
+                	   for (var i=0; i<data.response.results[0].data.bill.multiSponsors.length; i++){   
+                		   if (i!= data.response.results[0].data.bill.multiSponsors.length-1){
+                		       billInfo+= data.response.results[0].data.bill.multiSponsors[i].fullname + ', ';
+                		   }
+                		   else {
+                			   billInfo+= data.response.results[0].data.bill.multiSponsors[i].fullname;
+                		   }
+                	   }
+                 }
+                 
+                 billInfo+='<br/><b>Committee:</b> ' + data.response.results[0].data.bill.currentCommittee;
+                 billInfo+='<br/><b>Law Section:</b> ' + data.response.results[0].data.bill.lawSection;
+                 billInfo+=' <b>Law:</b> ' + data.response.results[0].data.bill.law;
+                 //billInfo+='<div class="hr"></div>';
+
+                 
                  $("#billInfo").html(billInfo);
+                 anchorText+='<br/><a href="#top">Top of Page</a>';
                  anchorText+='<br/><a href="#billInfo">Bill Information</a>';            
 
+                 
+                 //if there is an actions section, display it and add it to the quick navigation
+                 if (data.response.results[0].data.bill.actions!=undefined){
+                	 var actionsText='<h2>Actions</h2>';    
+                     actionsText+='<div class="hr"></div>';
+                	 actionsText+='<ul>';
+                     for (var i=0; i<data.response.results[0].data.bill.actions.length;i++){
+                    	    actionsText+='<li>' + data.response.results[0].data.bill.actions[i].date + ' ' + data.response.results[0].data.bill.actions[i].text + '</li>';
+                         }
+                     actionsText+='</ul>';
+                     $("#actions").html(actionsText);
+                     anchorText+='<br/><a href="#actions">Actions</a>';
+                 }
                  //if there is a memo section, display it and add it to the quick navigation
                  if (data.response.results[0].data.bill.memo!=undefined){
                      temp=data.response.results[0].data.bill.memo;
-                     var memo='<h2>Memo</h2>';
-                     
-                     memo+=temp.replace(/\n/gi, "<br/>");
-                     
+                     var memo='<h2>Memo</h2>';    
+                     memo+='<div class="hr"></div>';    
+                     memo+=breakUpText(temp);             
+                     //memo+=temp.replace(/\n/gi, "<br/>");                    
                      $("#memo").html(memo);
-                     
                      anchorText+='<br/><a href="#memo">Memo</a>';
                  }
 
@@ -90,7 +134,7 @@ function init(){
                  if (data.response.results[0].data.bill.fulltext!=undefined){
                      //initialize variables
                      fullText=data.response.results[0].data.bill.fulltext;
-                     var fullTextArray=[];
+                     /*var fullTextArray=[];
                      var index=0;
                      var beginning;
                      var end;
@@ -128,21 +172,32 @@ function init(){
                                 break;
                            }
                      }     
-                     
+
+                     var currentText="";
+                     var breakIndex=0;
+                     var firstSegment="";
+                     var secondSegment="";
                      //iterate through the text array
                      for (var i = 0; i < fullTextArray.length; i++) {
+                         breakIndex=0;
+                         currentText="";
                          processedText="";
-                         var currentText=fullTextArray[i];
+                         currentText=fullTextArray[i];
                          //get the number of line breaks within the text
                          numBreaks=currentText.match(/\n/gi).length-1;
                          //if the numbe is greater than 10, reformat it so it is now within a div
                          if (numBreaks>10){
-                                //processedText='<a href="#" class="trigger">Toggle Text</a>';
                                 currentText=currentText.substring(3);
-                                
-                                processedText+='<br/><br/><h3 class="trigger"><a href="#">Show/Hide Text</a></h2>';
+                                for (var j=0; j<5; j++){
+                                    breakIndex=currentText.indexOf("\n", breakIndex+1);
+                                }
+                                firstSegment=currentText.substring(0, breakIndex);
+                                secondSegment=currentText.substring(breakIndex);
+                                processedText+=firstSegment + '...';
+                                processedText+='<br/><br/><div class="trigger"><a href="#">Expand text block</a></div>';
                                
-                                processedText+='<div class="toggle">' + currentText + '</div>';
+                                //processedText+='<div class="toggle">' + currentText + '</div>';
+                                processedText+='<div class="toggle">' + secondSegment + '</div>';
                                 currentText=processedText;      
                          }
                          fullTextArray[i]=currentText;    
@@ -157,12 +212,20 @@ function init(){
                      
                      //put the fulltext in the fulltext div and add it to the navigation bar
                      var fulltext='<h2>Full Text</h2>';
-                     
-                     fulltext+=fullText.replace(/\n/gi, "<br/>");      
-                     $("#fulltext").html(fulltext);
+                     fulltext+='<div class="hr"></div>';
+                     fulltext+=fullText.replace(/\n/gi, "<br/>");     
+                     //fulltext+='<div class="hr"></div>'; 
+                     */
+                     var builtText='<h2>Full Text</h2>';
+                     builtText+='<div class="hr"></div>';
+                     //builtText+=fullText.replace(/\n/gi, "<br/>");  
+                     builtText+=breakUpText(fullText);
+                     //$("#fulltext").html(fulltext);
+                     $("#fulltext").html(builtText);
                      anchorText+='<br/><a href="#fulltext">Full Text</a>';
+                     
                  }
-
+                 anchorText+='<br/><a href="#comments">Comments</a>';
                  $("#anchors").append(anchorText);
             },
     'jsonp');
@@ -174,6 +237,7 @@ function init(){
 
 <body onload="init()">
 <%@ include file="header.jsp" %>
+<div id="top"></div>
 <div id="wrap">
 
     <div id="main">
@@ -198,6 +262,12 @@ function init(){
         </div>
     
         <div id="fulltext">
+        </div>
+        <br/>
+        <div id="comments">
+        <h2>Comments</h2>
+        <div class="hr"></div>
+            Disqus comments go here
         </div>
     
     </div>
