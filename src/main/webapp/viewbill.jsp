@@ -12,9 +12,21 @@
 </head>
 <script type="text/javascript">
 
+$('.trigger').live("mouseenter", function() {$(this).prev().css('background-color','yellow');}).live("mouseleave", function() {$(this).prev().css('background-color','transparent');});
+//$('.trigger').live('hover', function(){
+
+	
+	//var temper=$(this).prev();
+	//emper.effect("highlight", {}, 3000);
+	   //$(this).prev().css('background-color','yellow');
+   // }
+
+ //   );
+
+
 $('.trigger').live('click', function () {
-    
-    $(this).next().slideToggle('slow');
+	$(this).prev().slideToggle('slow');
+    //$(this).next().slideToggle('slow');
     if ($(this).html()=='<a href="#">Expand text block</a>'){
     	 $(this).html('<a href="#">Collapse text block</a>');
     }

@@ -81,10 +81,12 @@ function breakUpText(text){
                secondSegment=currentText.substring(breakIndex);
                processedText+=firstSegment + '...';
                //processedText+='<br/><br/><div class="trigger"><a href="#">Expand text block</a></div>';
-               processedText+='<div class="trigger"><a href="#">Expand text block</a></div>';
+               //processedText+='<div class="trigger"><a href="#">Expand text block</a></div>';
               
                //processedText+='<div class="toggle">' + currentText + '</div>';
+               secondSegment=secondSegment.substring(2);
                processedText+='<div class="toggle">' + secondSegment + '</div>';
+               processedText+='<div class="trigger"><a href="#">Expand text block</a></div>';
                currentText=processedText;      
         }
         textArray[i]=currentText;    
