@@ -13,6 +13,8 @@ body {
 	width:100%;
 	color:white;
 	padding:5px;
+	padding-right:0px;
+	margin-right:0px;
 	font-weight:bolder;
 	z-index:1;
 }
@@ -30,6 +32,8 @@ body {
     border-color:#446CC7;
     border-style:solid;
     border-width:3px;
+    padding-right:0px;
+    margin-right:0px;
     z-index:0;
 }
 #headerzone img{
