@@ -12,16 +12,38 @@
 </head>
 <script type="text/javascript">
 
-$('.trigger').live("mouseenter", function() {$(this).prev().css('background-color','yellow');}).live("mouseleave", function() {$(this).prev().css('background-color','transparent');});
-//$('.trigger').live('hover', function(){
+$('.trigger').live("mouseenter", function() {	
+           $(this).prev().css('background-color','yellow');
+	})
+	.live("mouseleave", function() {
+		   $(this).prev().css('background-color','transparent');
+	});
 
+$('.expandAll').live('click', function () {
+	//change the text of the link
+    if ($(this).html()=='<a href="#">Expand all text blocks</a>'){
+        $(this).html('<a href="#">Collapse all text blocks</a>');
+        $('.toggle').next().html('<a href="#">Collapse text block</a>');
+        $('.toggle').slideDown('slow');
+    }
+    else{
+        $(this).html('<a href="#">Expand all text blocks</a>');
+        $('.toggle').next().html('<a href="#">Expand text block</a>');
+        $('.toggle').slideUp('slow');
+    }
+
+	/*
+	$('.toggle').slideToggle('slow');
 	
-	//var temper=$(this).prev();
-	//emper.effect("highlight", {}, 3000);
-	   //$(this).prev().css('background-color','yellow');
-   // }
-
- //   );
+	if ($('.toggle').next().html()=='<a href="#">Expand text block</a>') {
+        $('.toggle').next().html('<a href="#">Collapse text block</a>');
+	}
+    else {
+        $('.toggle').next().html('<a href="#">Expand text block</a>');
+    }
+    */
+	return false;
+});
 
 
 $('.trigger').live('click', function () {
@@ -57,7 +79,6 @@ function alertMe(){
 	alert("testing");
 }
 
-
 function init(){
     $('#searchzone').animate({top: '-10px',width: '100%', height:'70px', left: '-20px'},200,function(){
                 
@@ -79,8 +100,9 @@ function init(){
             function(data) {
                  //set up the needed variables
                  var contents=[];
-                 var anchorText=[];          
-                 anchorText='<b>Quick Navigation: </b>';
+                 var anchorText=[];     
+                 anchorText+='<div class="expandAll"><a href="#">Expand all text blocks</a></div>';
+                 anchorText+='<b>Quick Navigation: </b>';
 
                  //display the bill information
                  var billInfo='<h1>' + data.response.results[0].data.bill.senateBillNo + ': ' + data.response.results[0].data.bill.title ;
@@ -153,88 +175,7 @@ function init(){
                  if (data.response.results[0].data.bill.fulltext!=undefined){
                      //initialize variables
                      fullText=data.response.results[0].data.bill.fulltext;
-                     /*var fullTextArray=[];
-                     var index=0;
-                     var beginning;
-                     var end;
-                     var numBreaks;
-                     var tempString;
-                     var processedText;
-                     beginning=0;
-
-                     //for the first block, select only the first double line break since there won't be one at the beginning of the text
-                     end=fullText.indexOf("\n\n", 0);
-                     //get the string text and push it to the array
-                     tempString=fullText.substring(beginning, end);
-                     fullTextArray.push(tempString);
-
-                     while (beginning!=-1 || end!=-1){
-                           //set beginning to the previous end
-                           beginning=end;
-                           //the new end is the next double line break
-                           end=fullText.indexOf("\n\n", beginning+1);
-                           //if there isn't another double line break, it has reached the end of the text
-                           if (end==-1){
-                               end=fullText.length;
-                           }
-
-                           //pull out the string between beginning and end
-                           tempString=fullText.substring(beginning, end);
-
-                           if (tempString==""){
-                               break;
-                           }
-                           //push the text to the array
-                           fullTextArray.push(tempString);
-                           
-                           if (end==-1 || beginning==-1){
-                                break;
-                           }
-                     }     
-
-                     var currentText="";
-                     var breakIndex=0;
-                     var firstSegment="";
-                     var secondSegment="";
-                     //iterate through the text array
-                     for (var i = 0; i < fullTextArray.length; i++) {
-                         breakIndex=0;
-                         currentText="";
-                         processedText="";
-                         currentText=fullTextArray[i];
-                         //get the number of line breaks within the text
-                         numBreaks=currentText.match(/\n/gi).length-1;
-                         //if the numbe is greater than 10, reformat it so it is now within a div
-                         if (numBreaks>10){
-                                currentText=currentText.substring(3);
-                                for (var j=0; j<5; j++){
-                                    breakIndex=currentText.indexOf("\n", breakIndex+1);
-                                }
-                                firstSegment=currentText.substring(0, breakIndex);
-                                secondSegment=currentText.substring(breakIndex);
-                                processedText+=firstSegment + '...';
-                                processedText+='<br/><br/><div class="trigger"><a href="#">Expand text block</a></div>';
-                               
-                                //processedText+='<div class="toggle">' + currentText + '</div>';
-                                processedText+='<div class="toggle">' + secondSegment + '</div>';
-                                currentText=processedText;      
-                         }
-                         fullTextArray[i]=currentText;    
-                     }
                      
-                     fullText="";
-                     
-                     //iterate through the array and build the string with all of the full text
-                     for (var i = 0; i < fullTextArray.length; i++) {
-                          fullText+=fullTextArray[i];
-                     }
-                     
-                     //put the fulltext in the fulltext div and add it to the navigation bar
-                     var fulltext='<h2>Full Text</h2>';
-                     fulltext+='<div class="hr"></div>';
-                     fulltext+=fullText.replace(/\n/gi, "<br/>");     
-                     //fulltext+='<div class="hr"></div>'; 
-                     */
                      var builtText='<h2>Full Text</h2>';
                      builtText+='<div class="hr"></div>';
                      //builtText+=fullText.replace(/\n/gi, "<br/>");  
@@ -260,6 +201,7 @@ function init(){
 <div id="wrap">
 
     <div id="main">
+    
     
     
         <div id="billInfo" class="box">

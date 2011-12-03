@@ -17,6 +17,8 @@ var pageId = getUrlVars()["pageId"];
 if (pageId==undefined){
 	pageId=1;
 }
+
+//var filters = getUrlVars()["filters"].split(',');
 var filters = getUrlVars()["filters"].split(',');
 if(filters!=undefined){
 	filtered = filters;
