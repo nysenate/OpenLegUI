@@ -49,7 +49,8 @@ function init(){
 
 	//if a search term was defined, perform the search
     if (searchTerm!=undefined){
-    	   gosearch();
+    	showSearchResults(pageId, 20, $('#search').val());
+ 	   //gosearch();
     }
 }
 
@@ -88,8 +89,8 @@ function filter(choice){
 		    	  $('.pages').each(function(index) {
 		    		    $(this).attr('href',$(this).attr('href')+'&filters='+filtered);
 		    	  });
-
-		    	  gosearch();
+		    	  showSearchResults(pageId, 20, $('#search').val());
+		    	  //gosearch();
 		    }
 		}
 		else
@@ -125,7 +126,8 @@ function filter(choice){
                           });
 	                  }
 	                  parent.location.hash=newurl;
-	                  gosearch();
+	                  showSearchResults(pageId, 20, $('#search').val());
+	                  //gosearch();
 	            }
 		    }
 		}
@@ -163,6 +165,7 @@ function announcements(filter){
 
 
 function gosearch(){	
+	
 	$("#filters.second").css('display','none');
 	$(window).unbind('resize');
 	$('#searchzone').animate({top: '-10px',width: '100%', height:'70px', left: '-20px'},200,function(){
@@ -218,7 +221,7 @@ function order(choice){
 	NYS Senate Links
 </div>
 <div id="searchzone">
-	<img src="http://m.nysenate.gov/legislation/img/openleglogo.gif"/>
+	<a href="index.jsp"><img src="http://m.nysenate.gov/legislation/img/openleglogo.gif"/></a>
     <div id="filters">
     	<input type="button" value="Bills" onclick="filter('Bills')" id="unclicked"/>
     	<input type="button" value="Meetings" onclick="filter('Meetings')" id="unclicked"/>
@@ -228,8 +231,8 @@ function order(choice){
      
 	
 		<input type="text" name="search" id="search" value="Start searching here!" style="color:black;"/> 
-        <input type="button" value="Go" onclick="gosearch()" id="go"/>
-	
+         <input type="button" value="Go" onclick="gosearch()" id="go"/>
+	   
 	
 	<!-- 
 	<form name="input" action="" method="get">
