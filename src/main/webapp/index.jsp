@@ -21,23 +21,8 @@ var newstuff=['Bill <a href="viewbill.jsp?oid=S1102-2011">S1102-2011: Establishe
               'Transcript <a href="">regular-session-10-01-2011</a>',
               'Bill <a href="viewbill.jsp?oid=J456-2011">J456-2011: Honoring Billy Foley upon the...</a>'];
 
-var searchTerm = getUrlVars()["search"];
-var pageId = getUrlVars()["pageId"];
-//if there was no pageId parameter, set it to 1
-if (pageId==undefined){
-	pageId=1;
-}
 
-//var filters = getUrlVars()["filters"].split(',');
-var filters = getUrlVars()["filters"].split(',');
-if(filters!=undefined){
-	filtered = filters;
-	for(f in filters)
-	{
-		var temp = filters[f].charAt(0).toUpperCase() + filters[f].slice(1)+"s";
-		filter(temp);
-	}
-}
+
 
 
 function init(){
@@ -46,11 +31,17 @@ function init(){
 	$(window).bind('resize', function(){$("#searchzone").css("left", ( $(window).width() - $("#searchzone").width()) / 2+$(window).scrollLeft() + "px");});
 	
 	announcements('popular');
-
+	var params = getUrlVars();
+	
 	//if a search term was defined, perform the search
-    if (searchTerm!=undefined){
-    	showSearchResults(pageId, 20, $('#search').val());
- 	   //gosearch();
+    if (params["search"]!=undefined){
+        if(params["pageId"]!=undefined) 
+            var pageId = params["pageId"];
+        else 
+            var pageId = 1;
+        //if(params["filtered"
+    	//showSearchResults(pageId, 20, $('#search').val());
+ 	   gosearch();
     }
 }
 
@@ -82,15 +73,20 @@ function filter(choice){
 		    filtered.push(choice.substring(0, choice.length-1).toLowerCase());
 		    
 		    if(results!=null){
-		    	  attr = getUrlVars();
-		    	  var newurl = 'search='+attr['search']+'&filters='+filtered;
+		    	  var params = getUrlVars();
+		    	  var newurl = 'search='+params['search']+'&filters='+filtered;
 		    	  parent.location.hash=newurl; 
 
 		    	  $('.pages').each(function(index) {
 		    		    $(this).attr('href',$(this).attr('href')+'&filters='+filtered);
 		    	  });
-		    	  showSearchResults(pageId, 20, $('#search').val());
-		    	  //gosearch();
+		    	  
+                  if(params["pageId"]==undefined)
+                      var pageId = 1;
+                  else
+                      var pageId = params["pageId"];
+                  
+                  showSearchResults(pageId, 20, params["search"]);
 		    }
 		}
 		else
@@ -101,10 +97,10 @@ function filter(choice){
 		    {
 			    filtered.splice(filtered.indexOf(choice.substring(0, choice.length-1).toLowerCase()), 1);
 		         if(results!=null){
-	                  attr = getUrlVars();
+	                  var params = getUrlVars();
 	                  if(filtered[0]!=null)
 	                  {
-	                	   var newurl = 'search='+$('#search').val()+'&filters='+filtered;
+                	    var newurl = 'search='+params["search"]+'&filters='+filtered;
                          $('.pages').each(function(index) {
                         	    oldlink = $(this).attr('href');
                         	    oldlink = oldlink.split('&');
@@ -117,7 +113,7 @@ function filter(choice){
 	                  }
 	                  else
 	                  {
-	                	  var newurl = 'search='+$('#search').val();
+	                	  var newurl = 'search='+params["search"];
                          $('.pages').each(function(index) {
                                 oldlink = $(this).attr('href');
                                 oldlink = oldlink.split('&');
@@ -126,7 +122,13 @@ function filter(choice){
                           });
 	                  }
 	                  parent.location.hash=newurl;
-	                  showSearchResults(pageId, 20, $('#search').val());
+	                  //var params = getUrlVars();
+	                  if(params["pageId"]==undefined)
+		                  var pageId = 1;
+	                  else
+		                  var pageId = params["pageId"];
+	                  alert(params["search"]);
+	                  showSearchResults(pageId, 20, params["search"]);
 	                  //gosearch();
 	            }
 		    }
@@ -176,8 +178,9 @@ function gosearch(){
 	}
 	parent.location.hash=newurl;
     //showSearchResults(pageId, 20, searchTerm);
-	if (pageId==undefined){
-	    pageId=1;
+    var params = getUrlVars();
+	if (params["pageId"]==undefined){
+	    var pageId=1;
 	}
 	showSearchResults(pageId, 20, $('#search').val());
     

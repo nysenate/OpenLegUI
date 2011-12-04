@@ -5,15 +5,20 @@ var results;
 //allows you to pull parameters from the url. especially useful for GET requests
 function getUrlVars() {
     var vars = {};
-    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
-        vars[key] = value;
-    });
-    /*var attr = window.location.href.split('#')[1].split('&');
-    for(a in attr){
-    	
-    	vars[attr[a].split('=')[0]]=attr[a].split('=')[1]
+
+    try{
+	    var attr = window.location.href.split('#')[1].split('&');
+	    for(a in attr){
+	    	
+	    	vars[attr[a].split('=')[0]]=attr[a].split('=')[1]
+	    }
     }
-    */
+    catch(err)
+    {
+        var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value;
+    	});
+    }
     return vars;
 }
 
