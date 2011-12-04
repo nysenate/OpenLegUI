@@ -9,8 +9,18 @@
 <script type="text/javascript">
 //set up the necessarey variables
 var filtered=[];
-var popular=['Puppy bill', 'Meeting about puppy', 'Transcript of barking puppy', 'A puppy taking action', 'People voting on puppies'];
-var newstuff=['This happened just now','This happened after that','Wow this happened today','Some other things happened recently too','Still recent enough to show up'];
+var popular=['Bill <a href="viewbill.jsp?oid=S5675A-2009">S5675A-2009: Provides for the training...</a>', 
+		'Meeting <a href="">Rules-04-12-2011</a>', 
+		'Bill <a href="viewbill.jsp?oid=A9768-2009">A9768-2009: Authorizes the town...</a>', 
+		'Transcript <a href="">regular-session-06-14-2011</a>', 
+		'Bill <a href="viewbill.jsp?oid=S6148A-2009">S6148A-2009: Prohibits the possession...</a>'];
+
+var newstuff=['Bill <a href="viewbill.jsp?oid=S1102-2011">S1102-2011: Establishes the computer...</a>',
+              'Bill <a href="viewbill.jsp?oid=A9356-2009">A9356-2009: Relates to searches for...</a>',
+              'Transcript <a href="">regular-session-03-30-2011</a>',
+              'Transcript <a href="">regular-session-10-01-2011</a>',
+              'Bill <a href="viewbill.jsp?oid=J456-2011">J456-2011: Honoring Billy Foley upon the...</a>'];
+
 var searchTerm = getUrlVars()["search"];
 var pageId = getUrlVars()["pageId"];
 //if there was no pageId parameter, set it to 1
