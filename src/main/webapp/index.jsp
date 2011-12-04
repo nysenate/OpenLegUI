@@ -41,6 +41,7 @@ function init(){
             var pageId = 1;
         //if(params["filtered"
     	//showSearchResults(pageId, 20, $('#search').val());
+        $('#search').val(params["search"]);
  	   gosearch();
     }
 }

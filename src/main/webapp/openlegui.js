@@ -6,19 +6,24 @@ var results;
 function getUrlVars() {
     var vars = {};
 
-    try{
-	    var attr = window.location.href.split('#')[1].split('&');
-	    for(a in attr){
-	    	
-	    	vars[attr[a].split('=')[0]]=attr[a].split('=')[1]
-	    }
+
+    var attr = window.location.href.split('#')[1].split('&');
+    for(a in attr){
+    	
+    	vars[attr[a].split('=')[0]]=attr[a].split('=')[1]
     }
-    catch(err)
-    {
-        var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
-        vars[key] = value;
-    	});
-    }
+
+    return vars;
+}
+
+function getGetVars() {
+    var vars = {};
+
+
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+    vars[key] = value;
+	});
+
     return vars;
 }
 

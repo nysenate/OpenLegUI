@@ -85,7 +85,7 @@ function init(){
     });
 
     //get the id of the document
-    var oid = getUrlVars()["oid"];
+    var oid = getGetVars()["oid"];
     
     //removes the hashtag from the GET parameter if it exists. this is a quick fix but should be implemented better in the javascript library
     if (oid.indexOf("#")!=-1){
