@@ -205,7 +205,7 @@ function order(choice){
 
 <body onload="init()">
 <div id="navzone">
-	A link
+	NYS Senate Links
 </div>
 <div id="searchzone">
 	<img src="http://m.nysenate.gov/legislation/img/openleglogo.gif"/>

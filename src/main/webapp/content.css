@@ -35,21 +35,48 @@
             float: left;    
             border:3px solid #446CC7;  
             border-radius: 15px;
-            padding:5px;
+            padding:5px;     
+            font-size:15px;
+            background-color:#D9E5FF; 
+        }
+        #anchors ul{
+            padding:0;
+            margin:0;
+        }
+        #anchors a:link, #anchors a:visited{
+            color: #FFFFFF;
+            text-decoration:none;
+        }
+        #anchors li{
+            list-style:none;
+            margin-top:10px;
+            margin-bottom:10px;
+            border: 0;
+            border-radius:5px;
+            -moz-border-radius: 5px;
+            background-color: #A6BEF5;
+            color:white;
+            padding-left:5px;
+            padding-right:5px;
+            padding-top:2px;
+            padding-bottom:2px;
+            font-weight:bolder;
+            text-decoration:none;
+            margin-bottom:5px;
+            display:block;
             
         }
+        
         #wrap{
-        margin:135px 15px 10px 15px;
-        padding:15px 15px 10px 15px;
-        float:left;
-        background-color:#FFFFFF;
+            margin:135px 15px 10px 15px;
+            padding:15px 15px 10px 15px;
+            float:left;
+            background-color:#FFFFFF;
         }
         
         .toggle{
-        display:none;
-        padding-top:0px;
-        margin-top:0px;
-        
-       
+            display:none;
+            padding-top:0px;
+            margin-top:0px;
         }
 

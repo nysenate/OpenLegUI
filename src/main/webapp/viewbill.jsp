@@ -13,7 +13,7 @@
 <script type="text/javascript">
 
 $('.trigger').live("mouseenter", function() {	
-           $(this).prev().css('background-color','yellow');
+           $(this).prev().css('background-color','#D9E5FF');
 	})
 	.live("mouseleave", function() {
 		   $(this).prev().css('background-color','transparent');
@@ -101,8 +101,8 @@ function init(){
                  //set up the needed variables
                  var contents=[];
                  var anchorText=[];     
-                 anchorText+='<div class="expandAll"><a href="#">Expand all text blocks</a></div>';
-                 anchorText+='<b>Quick Navigation: </b>';
+                 anchorText+='<ul><li><div class="expandAll"><a href="#">Expand all text blocks</a></div></li>';
+                 anchorText+='<b>Quick Navigation:<hr> </b>';
 
                  //display the bill information
                  var billInfo='<h1>' + data.response.results[0].data.bill.senateBillNo + ': ' + data.response.results[0].data.bill.title ;
@@ -144,8 +144,8 @@ function init(){
 
                  
                  $("#billInfo").html(billInfo);
-                 anchorText+='<br/><a href="#top">Top of Page</a>';
-                 anchorText+='<br/><a href="#billInfo">Bill Information</a>';            
+                 anchorText+='<li><a href="#top">Top of Page</a></li>';
+                 anchorText+='<li><a href="#billInfo">Bill Information</a></li>';            
 
                  
                  //if there is an actions section, display it and add it to the quick navigation
@@ -158,7 +158,7 @@ function init(){
                          }
                      actionsText+='</ul>';
                      $("#actions").html(actionsText);
-                     anchorText+='<br/><a href="#actions">Actions</a>';
+                     anchorText+='<li><a href="#actions">Actions</a></li>';
                  }
                  //if there is a memo section, display it and add it to the quick navigation
                  if (data.response.results[0].data.bill.memo!=undefined){
@@ -168,7 +168,7 @@ function init(){
                      memo+=breakUpText(temp);             
                      //memo+=temp.replace(/\n/gi, "<br/>");                    
                      $("#memo").html(memo);
-                     anchorText+='<br/><a href="#memo">Memo</a>';
+                     anchorText+='<li><a href="#memo">Memo</a></li>';
                  }
 
                //if there is a full text section, display it and add it to the quick navigation
@@ -182,10 +182,10 @@ function init(){
                      builtText+=breakUpText(fullText);
                      //$("#fulltext").html(fulltext);
                      $("#fulltext").html(builtText);
-                     anchorText+='<br/><a href="#fulltext">Full Text</a>';
+                     anchorText+='<li><a href="#fulltext">Full Text</a></li>';
                      
                  }
-                 anchorText+='<br/><a href="#comments">Comments</a>';
+                 anchorText+='<li><a href="#comments">Comments</a></li></ul>';
                  $("#anchors").append(anchorText);
             },
     'jsonp');
