@@ -128,7 +128,7 @@ function filter(choice){
 		                  var pageId = 1;
 	                  else
 		                  var pageId = params["pageId"];
-	                  alert(params["search"]);
+	                  
 	                  showSearchResults(pageId, 20, params["search"]);
 	                  //gosearch();
 	            }
