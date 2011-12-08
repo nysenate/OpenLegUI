@@ -8,7 +8,7 @@
 <script type="text/javascript" src="openlegui.js"></script>
 
 <title>OpenLegislation</title>
-<link href="content.css" rel="stylesheet" type="text/css" />
+
 </head>
 <script type="text/javascript">
 
