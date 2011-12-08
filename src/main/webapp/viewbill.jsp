@@ -1,9 +1,11 @@
-<%@ page language="java" import="java.util.*, java.text.*,java.io.*" pageEncoding="UTF-8"%>
+<%@ page language="java" import="java.util.*, java.text.*,java.io.*"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
 
 <script type="text/javascript" src="openlegui.js"></script>
 
@@ -12,6 +14,7 @@
 </head>
 <script type="text/javascript">
 
+//trigger that highlights an expanded text block when the collapse link is hovered over
 $('.trigger').live("mouseenter", function() {	
            $(this).prev().css('background-color','#D9E5FF');
 	})
@@ -19,46 +22,41 @@ $('.trigger').live("mouseenter", function() {
 		   $(this).prev().css('background-color','transparent');
 	});
 
+//trigger that expands all collapsed text blocks
 $('.expandAll').live('click', function () {
-	//change the text of the link
+	//if expand is displayed as the link, expand all blocks
     if ($(this).html()=='<a href="#">Expand all text blocks</a>'){
         $(this).html('<a href="#">Collapse all text blocks</a>');
         $('.toggle').next().html('<a href="#">Collapse text block</a>');
         $('.toggle').slideDown('slow');
     }
+    //otherwise, collapse all blocks
     else{
         $(this).html('<a href="#">Expand all text blocks</a>');
         $('.toggle').next().html('<a href="#">Expand text block</a>');
         $('.toggle').slideUp('slow');
     }
 
-	/*
-	$('.toggle').slideToggle('slow');
-	
-	if ($('.toggle').next().html()=='<a href="#">Expand text block</a>') {
-        $('.toggle').next().html('<a href="#">Collapse text block</a>');
-	}
-    else {
-        $('.toggle').next().html('<a href="#">Expand text block</a>');
-    }
-    */
+	//prevents the code from finalizing the link and adding a # to the url
 	return false;
 });
 
-
+//trigger that expands text blocks
 $('.trigger').live('click', function () {
 	$(this).prev().slideToggle('slow');
-    //$(this).next().slideToggle('slow');
+	//if expand is displayed, expand the block
     if ($(this).html()=='<a href="#">Expand text block</a>'){
     	 $(this).html('<a href="#">Collapse text block</a>');
     }
+    //otherwise collapse the block
     else{
     	$(this).html('<a href="#">Expand text block</a>');
     }
-   
+  //prevents the code from finalizing the link and adding a # to the url
     return false;
   });
 
+//handles the navigation bar automatically moving with the scrolling of the page
 $(function() {
     var offset = $("#anchors").offset();
     var topPadding = 15;
@@ -75,10 +73,7 @@ $(function() {
     });
 });
 
-function alertMe(){
-	alert("testing");
-}
-
+//function is called when the page is loaded
 function init(){
     $('#searchzone').animate({top: '-10px',width: '100%', height:'70px', left: '-20px'},200,function(){
                 
@@ -87,7 +82,7 @@ function init(){
     //get the id of the document
     var oid = getGetVars()["oid"];
     
-    //removes the hashtag from the GET parameter if it exists. this is a quick fix but should be implemented better in the javascript library
+    //removes the hashtag from the GET parameter if it exists. this is a quick fix
     if (oid.indexOf("#")!=-1){
            oid=oid.substring(0,oid.indexOf("#"));
     }
@@ -112,7 +107,8 @@ function init(){
                  if (data.response.results[0].data.bill.sponsor!=null){
                      billInfo+=data.response.results[0].data.bill.sponsor.fullname;
                  }
-                 
+
+                 //get the co sponsors
                  billInfo+='<br/><b>Co-sponsor(s):</b> ';
                  if (data.response.results[0].data.bill.coSponsors!=null){               	    
                        for (var i=0; i<data.response.results[0].data.bill.coSponsors.length; i++){   
@@ -125,6 +121,7 @@ function init(){
                        }
                  }
 
+                 //get the multi sponsors
                  billInfo+='<br/><b>Multi-sponsor(s):</b> ';
                  if (data.response.results[0].data.bill.multiSponsors!=null){
                 	   for (var i=0; i<data.response.results[0].data.bill.multiSponsors.length; i++){   
@@ -136,13 +133,13 @@ function init(){
                 		   }
                 	   }
                  }
-                 
+
+                 //get other document sections
                  billInfo+='<br/><b>Committee:</b> ' + data.response.results[0].data.bill.currentCommittee;
                  billInfo+='<br/><b>Law Section:</b> ' + data.response.results[0].data.bill.lawSection;
                  billInfo+=' <b>Law:</b> ' + data.response.results[0].data.bill.law;
-                 //billInfo+='<div class="hr"></div>';
 
-                 
+                 //append the string to the bill info div
                  $("#billInfo").html(billInfo);
                  anchorText+='<li><a href="#top">Top of Page</a></li>';
                  anchorText+='<li><a href="#billInfo">Bill Information</a></li>';            
@@ -164,9 +161,9 @@ function init(){
                  if (data.response.results[0].data.bill.memo!=undefined){
                      temp=data.response.results[0].data.bill.memo;
                      var memo='<h2>Memo</h2>';    
-                     memo+='<div class="hr"></div>';    
-                     memo+=breakUpText(temp);             
-                     //memo+=temp.replace(/\n/gi, "<br/>");                    
+                     memo+='<div class="hr"></div>'; 
+                     //check for any long text blocks and break them up if necessary   
+                     memo+=breakUpText(temp);                                
                      $("#memo").html(memo);
                      anchorText+='<li><a href="#memo">Memo</a></li>';
                  }
@@ -178,12 +175,9 @@ function init(){
                      
                      var builtText='<h2>Full Text</h2>';
                      builtText+='<div class="hr"></div>';
-                     //builtText+=fullText.replace(/\n/gi, "<br/>");  
                      builtText+=breakUpText(fullText);
-                     //$("#fulltext").html(fulltext);
                      $("#fulltext").html(builtText);
-                     anchorText+='<li><a href="#fulltext">Full Text</a></li>';
-                     
+                     anchorText+='<li><a href="#fulltext">Full Text</a></li>';             
                  }
                  anchorText+='<li><a href="#comments">Comments</a></li></ul>';
                  $("#anchors").append(anchorText);
@@ -196,47 +190,39 @@ function init(){
 </script>
 
 <body onload="init()">
-<%@ include file="header.jsp" %>
+
+<%@ include file="header.jsp"%>
 <div id="top"></div>
 <div id="wrap">
 
-    <div id="main">
-    
-    
-    
-        <div id="billInfo" class="box">
-        </div>
-    
-        <div id="actions" class="box">
-        </div>
-    
-        <div id="meetings" class="box">
-        </div>
-    
-        <div id="calendars" class="box">
-        </div>
-    
-        <div id="votes" class="box">
-        </div>
-    
-       <div id="memo" class="box">
-        </div>
-    
-        <div id="fulltext">
-        </div>
-        <br/>
-        <div id="comments">
-        <h2>Comments</h2>
-        <div class="hr"></div>
-            Disqus comments go here
-        </div>
-    
-    </div>
-    
-    <div id="anchors">
-    </div>
-    </div>
-    
+<div id="main">
+
+
+
+<div id="billInfo" class="box"></div>
+
+<div id="actions" class="box"></div>
+
+<div id="meetings" class="box"></div>
+
+<div id="calendars" class="box"></div>
+
+<div id="votes" class="box"></div>
+
+<div id="memo" class="box"></div>
+
+<div id="fulltext"></div>
+<br />
+<div id="comments">
+<h2>Comments</h2>
+<div class="hr"></div>
+Disqus comments go here</div>
+
+</div>
+
+<div id="anchors"></div>
+</div>
+
 
 </body>
 </html>
